@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SchmidtTAndroidRemoteII</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_dvr">DVRActivity</string>
+    <string name="title_activity_favchan">FavchanActivity</string>
+</resources>
