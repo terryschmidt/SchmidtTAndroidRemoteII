@@ -10,6 +10,8 @@ import android.view.View.*;
 import android.os.Bundle;
 import android.widget.*;
 
+// Terry Schmidt, CSC472, Fall 2015
+
 public class DVRActivity extends Activity {
 
     private TextView DVRPowerText;
@@ -76,26 +78,25 @@ public class DVRActivity extends Activity {
 
         for (int id : buttonIDlist) {
             View v = (View) findViewById(id);
-            v.setOnClickListener(btnClick);
+            v.setOnClickListener(btnClick); // set all relevant buttons as onClickListeners
         }
     }
 
     private class ButtonClickListener implements OnClickListener {
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.playButton:  playPressed(); break;
-                case R.id.stopButton:  stopPressed(); break;
-                case R.id.pauseButton: pausePressed(); break;
-                case R.id.fastForwardButton:  fastForwardPressed(); break;
-                case R.id.rewindButton: rewindPressed(); break;
-                case R.id.recordButton: recordPressed(); break;
-                case R.id.switchToTVButton: switchToTVPressed(); break;
-                default:
+                case R.id.playButton:  playPressed(); break; // when user presses play button, invoke corresponding method.
+                case R.id.stopButton:  stopPressed(); break; // when user presses stop button, invoke corresponding method.
+                case R.id.pauseButton: pausePressed(); break; // when user presses pause button, invoke corresponding method.
+                case R.id.fastForwardButton:  fastForwardPressed(); break; // when user presses fast forward button, invoke corresponding method.
+                case R.id.rewindButton: rewindPressed(); break; // when user presses rewind button, invoke corresponding method.
+                case R.id.recordButton: recordPressed(); break; // when user presses record button, invoke corresponding method.
+                case R.id.switchToTVButton: switchToTVPressed(); break; // when user presses switch to TV button, invoke corresponding method.
             }
         }
     }
 
-    private void playPressed() {
+    private void playPressed() { // check if DVR can be set to play.  If so, set state in UI, else impossibleRequest()
         if (stateText.getText() == "Recording") {
             impossibleRequest("Playing");
         } else {
@@ -104,12 +105,12 @@ public class DVRActivity extends Activity {
         }
     }
 
-    private void stopPressed() {
+    private void stopPressed() { // stop the DVR.
         isInPlayMode = false;
         stateText.setText("Stopped");
     }
 
-    private void pausePressed() {
+    private void pausePressed() { // check if DVR can be set to pause.  If so, set the state in UI.  Else call impossibleRequest().
         if (isInPlayMode == true && stateText.getText() != "Recording") {
             stateText.setText("Paused");
         } else {
@@ -117,7 +118,7 @@ public class DVRActivity extends Activity {
         }
     }
 
-    private void fastForwardPressed() {
+    private void fastForwardPressed() { // check if DVR can be set to FF.  If so, set the state in UI, else call impossibleRequest().
         if (isInPlayMode == true && stateText.getText() != "Recording") {
             stateText.setText("Fast forwarding");
         } else {
@@ -125,7 +126,7 @@ public class DVRActivity extends Activity {
         }
     }
 
-    private void rewindPressed() {
+    private void rewindPressed() { // check if DVR can be set to rewind.  If so, set the state, else call impossibleRequest().
         if (isInPlayMode == true && stateText.getText() != "Recording") {
             stateText.setText("Fast rewinding");
         } else {
@@ -133,7 +134,7 @@ public class DVRActivity extends Activity {
         }
     }
 
-    private void recordPressed() {
+    private void recordPressed() { // check if DVr can be set to record.  If so, set the state, else call impossibleRequest().
         if (stateText.getText() == "Stopped" && isInPlayMode == false) {
             stateText.setText("Recording");
         } else {
@@ -145,7 +146,7 @@ public class DVRActivity extends Activity {
         finish();
     }
 
-    private void impossibleRequest(String stateRequested) {
+    private void impossibleRequest(String stateRequested) { // invoked when user requests an impossible instruction.  Displays toast notifying them.
         Toast.makeText(this, "You have selected an impossible request.", Toast.LENGTH_LONG).show();
     }
 }

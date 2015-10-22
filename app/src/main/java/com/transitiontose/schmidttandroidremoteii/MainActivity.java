@@ -7,6 +7,8 @@ import android.view.View.*;
 import android.os.Bundle;
 import android.widget.*;
 
+// Terry Schmidt, CSC472, Fall 2015
+
 public class MainActivity extends Activity {
 
     private int currentChannelNum = 1;
@@ -67,7 +69,7 @@ public class MainActivity extends Activity {
         powerSwitch.setChecked(true);
 
         powerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { // invoked when the switch is moved
                 if (isChecked == true) {
                     zeroButton.setClickable(true); oneButton.setClickable(true); twoButton.setClickable(true);
                     threeButton.setClickable(true); fourButton.setClickable(true); fiveButton.setClickable(true);
@@ -88,7 +90,7 @@ public class MainActivity extends Activity {
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) { // invoked when the seekbar is moved
                 // TODO Auto-generated method stub
                 speakerVolumeText.setText(String.valueOf(progress));
             }
@@ -115,26 +117,26 @@ public class MainActivity extends Activity {
 
         for (int id : idList) {
             View v = (View) findViewById(id);
-            v.setOnClickListener(btnClick);
+            v.setOnClickListener(btnClick); // set all relevant buttons as onclicklisteners
         }
     }
 
     private class ButtonClickListener implements OnClickListener {
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.plusButton: plusPressed(); break;
-                case R.id.minusButton: minusPressed(); break;
-                case R.id.firstFav:  firstFavPressed();  break;
-                case R.id.thirdFav:  thirdFavPressed();  break;
-                case R.id.secondFav: secondFavPressed();  break;
-                case R.id.switchToDVRButton: switchToDVRPressed(); break;
-                case R.id.configureButton: configurePressed(); break;
+                case R.id.plusButton: plusPressed(); break;  // when user pressed plus button
+                case R.id.minusButton: minusPressed(); break; // when user pressed minus button
+                case R.id.firstFav:  firstFavPressed();  break; // when user pressed first favorite button
+                case R.id.thirdFav:  thirdFavPressed();  break; // when user pressed second favorite button
+                case R.id.secondFav: secondFavPressed();  break; // when user pressed third favorite button
+                case R.id.switchToDVRButton: switchToDVRPressed(); break; // when user pressed switch to dvr
+                case R.id.configureButton: configurePressed(); break; // when user pressed configure
                 default: numPressed(v); break;  // default case is when user pressed a numeric button
             }
         }
     }
 
-    void firstFavPressed() {
+    void firstFavPressed() { // check the length of the number and set the appropriate string in the UI.  Also, updates the currentChannelNum.
         String firstFavNumStr = String.valueOf(firstFavNum);
 
             currentChannelNum = firstFavNum;
@@ -152,7 +154,7 @@ public class MainActivity extends Activity {
 
     }
 
-    void secondFavPressed() {
+    void secondFavPressed() { // check the length of the number and set the appropriate string in the UI.  Also, updates the currentChannelNum.
         String secondFavNumStr = String.valueOf(secondFavNum);
 
             currentChannelNum = secondFavNum;
@@ -170,7 +172,7 @@ public class MainActivity extends Activity {
 
     }
 
-    void thirdFavPressed() {
+    void thirdFavPressed() { // check the length of the number and set the appropriate string in the UI.  Also, updates the currentChannelNum.
         String thirdFavNumStr = String.valueOf(thirdFavNum);
 
             currentChannelNum = thirdFavNum;
@@ -188,18 +190,18 @@ public class MainActivity extends Activity {
 
     }
 
-    void configurePressed() {
+    void configurePressed() { // create and start explicit intent for the configure favorite channel activity
         Intent intent = new Intent(MainActivity.this, FavchanActivity.class);
         //startActivity(intent);
         startActivityForResult(intent, ASK_QUESTION);
     }
 
-    void switchToDVRPressed() {
+    void switchToDVRPressed() { // create and start explicit intent for DVR activity
         Intent intent = new Intent(MainActivity.this, DVRActivity.class);
         startActivity(intent);
     }
 
-    void minusPressed() {
+    void minusPressed() { // decrement currentChannelNum, set appropriate string in UI
         if (currentChannelNum >= 2) {
             currentChannelNum--;
             String tmp = Integer.toString(currentChannelNum);
@@ -217,7 +219,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    void plusPressed() {
+    void plusPressed() { // increment currentChannelNum, set appropriate string in UI
         if (currentChannelNum <= 998) {
             currentChannelNum++;
             String tmp = Integer.toString(currentChannelNum);
@@ -235,7 +237,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    void numPressed(View v) {
+    void numPressed(View v) { // number button pressed.  Check if user has pressed 3 numbers, if so, check if the 3 numbers are valid (not zero).  Update currentChannelNum, set UI.
         String numPressed = ((Button) v).getText().toString();
         channelUserIsEntering += numPressed;
 
@@ -250,7 +252,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {  // invoked by system when this activity gets a response from the configure activity.
         System.out.println("onActivityResult called");
         if (requestCode == ASK_QUESTION) {
             if (resultCode == RESULT_OK) {

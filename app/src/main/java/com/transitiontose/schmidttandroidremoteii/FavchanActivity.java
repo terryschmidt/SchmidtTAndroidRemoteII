@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.widget.*;
 import android.content.Intent;
 
+// Terry Schmidt, CSC472, Fall 2015
+
 public class FavchanActivity extends Activity {
 
     private RadioButton radioButtonLeft;
@@ -84,7 +86,7 @@ public class FavchanActivity extends Activity {
 
         for (int id : buttonIDlist) {
             View v = (View) findViewById(id);
-            v.setOnClickListener(btnClick);
+            v.setOnClickListener(btnClick); // set all relevant buttons as onClickListeners.
         }
 
     }
@@ -92,16 +94,16 @@ public class FavchanActivity extends Activity {
     private class ButtonClickListener implements OnClickListener {
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.plusButton:  plusPressed(); break;
-                case R.id.minusButton:   minusPressed(); break;
-                case R.id.cancelButton:  cancelPressed();  break;
-                case R.id.saveButton:   savePressed(); break;
-                default: numberPressed(v); break;
+                case R.id.plusButton:  plusPressed(); break; // when user presses plus, invoke appropriate function.
+                case R.id.minusButton:   minusPressed(); break; // when user presses minus, invoke appropriate function.
+                case R.id.cancelButton:  cancelPressed();  break; // when user presses cancel, invoke appropriate function.
+                case R.id.saveButton:   savePressed(); break; // when user pressed save, invoke appropriate function.
+                default: numberPressed(v); break; // default case is when the user pressed a number button (0 - 9).
             }
         }
     }
 
-    private void plusPressed() {
+    private void plusPressed() { // when user press +, check that chanNum can be incremented.  If so, increment, set appropriate string in UI.
         if (currentChanNum <= 998) {
             currentChanNum++;
             String tmp = Integer.toString(currentChanNum);
@@ -119,7 +121,7 @@ public class FavchanActivity extends Activity {
         }
     }
 
-    private void minusPressed() {
+    private void minusPressed() { // when user presses -, check that chanNum can be decremented.  If so, decrement, set appropriate string in UI.
         if (currentChanNum >= 2) {
             currentChanNum--;
             String tmp = Integer.toString(currentChanNum);
@@ -137,11 +139,12 @@ public class FavchanActivity extends Activity {
         }
     }
 
-    private void cancelPressed() {
+    private void cancelPressed() { // if user presses cancel, discard anything they have done and finish the activity.
         finish();
     }
 
-    private void savePressed() {
+    private void savePressed() { // check booleans to find the selected radio button, check label length, validate channel num.  Display toasts if there are issues.
+        // if there are no issues, make a new intent, attach the data needed in the main activity, setResult the intent, and finish() this activity.
         Intent data = new Intent();
         if (leftRadioButtonSelected == true && middleRadioButtonSelected == false && rightRadioButtonSelected == false) {
             if (labelField.getText().length() >= 2 && labelField.getText().length() <= 4) {
@@ -192,7 +195,8 @@ public class FavchanActivity extends Activity {
         }
     }
 
-    private void numberPressed(View v) {
+    private void numberPressed(View v) { // get the number the user pressed, check if user has pressed a sequence of 3 numbers.  If so, attempt to validate it.
+        // if its not valid, reset the string for the next sequence of 3 numbers.
         String numPressed = ((Button) v).getText().toString();
         channelUserIsEntering += numPressed;
 
@@ -207,7 +211,7 @@ public class FavchanActivity extends Activity {
         }
     }
 
-    public void onRadioButtonClicked(View view) {
+    public void onRadioButtonClicked(View view) { // invoked when a user selects a radio button.  Set appropriate boolean values as a result.
         RadioButton radioButton = (RadioButton) view;
         if (radioButton.getText().equals("Left")) {
             System.out.println("Left radio pressed");
