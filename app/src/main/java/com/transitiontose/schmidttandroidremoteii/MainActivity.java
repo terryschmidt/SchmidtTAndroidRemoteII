@@ -27,13 +27,18 @@ public class MainActivity extends Activity {
     private Button plusButton; private Button minusButton;
 
     // Favorite channel buttons
-    private Button ABCButton; private Button CBSButton; private Button NBCButton;
+    private Button firstFav; private Button thirdFav; private Button secondFav;
+
+    // new buttons
+    private Button switchToDVRButton; private Button configureButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        switchToDVRButton = (Button) findViewById(R.id.switchToDVRButton);
+        configureButton = (Button) findViewById(R.id.configureButton);
         tvPowerText = (TextView) findViewById(R.id.tvPowerText);
         speakerVolumeText = (TextView) findViewById(R.id.speakerVolumeText);
         currentChanText = (TextView) findViewById(R.id.currentChanText);
@@ -48,9 +53,9 @@ public class MainActivity extends Activity {
         sevenButton = (Button) findViewById(R.id.sevenButton);
         eightButton = (Button) findViewById(R.id.eightButton);
         nineButton = (Button) findViewById(R.id.nineButton);
-        ABCButton = (Button) findViewById(R.id.ABCButton);
-        CBSButton = (Button) findViewById(R.id.CBSButton);
-        NBCButton = (Button) findViewById(R.id.NBCButton);
+        firstFav = (Button) findViewById(R.id.firstFav);
+        thirdFav = (Button) findViewById(R.id.thirdFav);
+        secondFav = (Button) findViewById(R.id.secondFav);
         plusButton = (Button) findViewById(R.id.plusButton);
         minusButton = (Button) findViewById(R.id.minusButton);
         powerSwitch = (Switch) findViewById(R.id.powerSwitch);
@@ -63,16 +68,16 @@ public class MainActivity extends Activity {
                     zeroButton.setClickable(true); oneButton.setClickable(true); twoButton.setClickable(true);
                     threeButton.setClickable(true); fourButton.setClickable(true); fiveButton.setClickable(true);
                     sixButton.setClickable(true); sevenButton.setClickable(true); eightButton.setClickable(true);
-                    nineButton.setClickable(true); ABCButton.setClickable(true); CBSButton.setClickable(true);
-                    NBCButton.setClickable(true); plusButton.setClickable(true); minusButton.setClickable(true);
-                    seekBar.setEnabled(true); tvPowerText.setText("On");
+                    nineButton.setClickable(true); firstFav.setClickable(true); thirdFav.setClickable(true);
+                    secondFav.setClickable(true); plusButton.setClickable(true); minusButton.setClickable(true);
+                    seekBar.setEnabled(true); switchToDVRButton.setClickable(true); configureButton.setClickable(true); tvPowerText.setText("On");
                 } else {
                     zeroButton.setClickable(false); oneButton.setClickable(false); twoButton.setClickable(false);
                     threeButton.setClickable(false); fourButton.setClickable(false); fiveButton.setClickable(false);
                     sixButton.setClickable(false); sevenButton.setClickable(false); eightButton.setClickable(false);
-                    nineButton.setClickable(false); ABCButton.setClickable(false); CBSButton.setClickable(false);
-                    NBCButton.setClickable(false); plusButton.setClickable(false); minusButton.setClickable(false);
-                    seekBar.setEnabled(false); tvPowerText.setText("Off");
+                    nineButton.setClickable(false); firstFav.setClickable(false); thirdFav.setClickable(false);
+                    secondFav.setClickable(false); plusButton.setClickable(false); minusButton.setClickable(false);
+                    seekBar.setEnabled(false); switchToDVRButton.setClickable(false); configureButton.setClickable(false); tvPowerText.setText("Off");
                 }
             }
         });
@@ -96,11 +101,12 @@ public class MainActivity extends Activity {
         });
 
         int[] idList = {
-                R.id.ABCButton, R.id.CBSButton, R.id.NBCButton,
+                R.id.firstFav, R.id.thirdFav, R.id.secondFav,
                 R.id.plusButton, R.id.minusButton, R.id.zeroButton,
                 R.id.oneButton, R.id.twoButton, R.id.threeButton,
                 R.id.fourButton, R.id.fiveButton, R.id.sixButton,
-                R.id.sevenButton, R.id.eightButton, R.id.nineButton
+                R.id.sevenButton, R.id.eightButton, R.id.nineButton,
+                R.id.switchToDVRButton, R.id.configureButton
         };
 
         for (int id : idList) {
@@ -114,12 +120,22 @@ public class MainActivity extends Activity {
             switch (v.getId()) {
                 case R.id.plusButton: plusPressed(); break;
                 case R.id.minusButton: minusPressed(); break;
-                case R.id.ABCButton: currentChanText.setText("007"); currentChannelNum = 7; break;
-                case R.id.CBSButton: currentChanText.setText("002"); currentChannelNum = 2; break;
-                case R.id.NBCButton: currentChanText.setText("005"); currentChannelNum = 5; break;
+                case R.id.firstFav:  break;
+                case R.id.thirdFav:  break;
+                case R.id.secondFav: break;
+                case R.id.switchToDVRButton: switchToDVRPressed(); break;
+                case R.id.configureButton: configurePressed(); break;
                 default: numPressed(v); break;  // default case is when user pressed a numeric button
             }
         }
+    }
+
+    void configurePressed() {
+
+    }
+
+    void switchToDVRPressed() {
+
     }
 
     void minusPressed() {

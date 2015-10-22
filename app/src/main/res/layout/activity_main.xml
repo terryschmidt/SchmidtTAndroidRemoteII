@@ -394,7 +394,7 @@
             android:layout_weight="0.33"
             android:text="ABC"
             android:layout_gravity="right"
-            android:id="@+id/ABCButton" />
+            android:id="@+id/firstFav" />
 
         <Button
             android:layout_width="50dp"
@@ -402,7 +402,7 @@
             android:layout_weight="0.33"
             android:text="NBC"
             android:layout_gravity="right"
-            android:id="@+id/NBCButton" />
+            android:id="@+id/secondFav" />
 
         <Button
             android:layout_width="50dp"
@@ -410,7 +410,7 @@
             android:layout_weight="0.33"
             android:layout_gravity="right"
             android:text="CBS"
-            android:id="@+id/CBSButton" />
+            android:id="@+id/thirdFav" />
 
     </LinearLayout>
 
