@@ -23,6 +23,7 @@ public class DVRActivity extends Activity {
     private Button switchToTVButton;
     private Switch DVRPowerSwitch;
     private ButtonClickListener btnClick;
+    private Boolean isInPlayMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class DVRActivity extends Activity {
         recordButton = (Button) findViewById(R.id.recordButton);
         switchToTVButton = (Button) findViewById(R.id.switchToTVButton);
         DVRPowerSwitch = (Switch) findViewById(R.id.DVRPowerSwitch);
+        DVRPowerSwitch.setChecked(true);
 
         DVRPowerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -52,6 +54,7 @@ public class DVRActivity extends Activity {
                     recordButton.setClickable(true);
                     switchToTVButton.setClickable(true);
                     DVRPowerText.setText("On"); stateText.setText("Stopped");
+                    isInPlayMode = false;
                 } else {
                     playButton.setClickable(false); stopButton.setClickable(false); pauseButton.setClickable(false);
                     fastForwardButton.setClickable(false); rewindButton.setClickable(false); recordButton.setClickable(false);
@@ -93,82 +96,56 @@ public class DVRActivity extends Activity {
     }
 
     private void playPressed() {
-
+        if (stateText.getText() == "Recording") {
+            impossibleRequest("Playing");
+        } else {
+            stateText.setText("Playing");
+            isInPlayMode = true;
+        }
     }
 
     private void stopPressed() {
-
+        isInPlayMode = false;
+        stateText.setText("Stopped");
     }
 
     private void pausePressed() {
-
+        if (isInPlayMode == true && stateText.getText() != "Recording") {
+            stateText.setText("Paused");
+        } else {
+            impossibleRequest("Paused");
+        }
     }
 
     private void fastForwardPressed() {
-
+        if (isInPlayMode == true && stateText.getText() != "Recording") {
+            stateText.setText("Fast forwarding");
+        } else {
+            impossibleRequest("Fast forwarding");
+        }
     }
 
     private void rewindPressed() {
-
+        if (isInPlayMode == true && stateText.getText() != "Recording") {
+            stateText.setText("Fast rewinding");
+        } else {
+            impossibleRequest("Fast rewinding");
+        }
     }
 
     private void recordPressed() {
-
+        if (stateText.getText() == "Stopped" && isInPlayMode == false) {
+            stateText.setText("Recording");
+        } else {
+            impossibleRequest("Recording");
+        }
     }
 
     private void switchToTVPressed() {
-
+        finish();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dvr, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    private void impossibleRequest(String stateRequested) {
+        Toast.makeText(this, "You have selected an impossible request.", Toast.LENGTH_LONG).show();
     }
 }

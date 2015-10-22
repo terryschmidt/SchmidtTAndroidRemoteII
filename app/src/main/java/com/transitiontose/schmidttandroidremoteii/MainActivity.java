@@ -1,6 +1,7 @@
 package com.transitiontose.schmidttandroidremoteii;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.*;
 import android.view.View.*;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ public class MainActivity extends Activity {
 
     private int currentChannelNum = 1;
     private String channelUserIsEntering = "";
+    private static final int ASK_QUESTION = 100;
 
     private ButtonClickListener btnClick;
     private TextView tvPowerText;
@@ -28,6 +30,8 @@ public class MainActivity extends Activity {
 
     // Favorite channel buttons
     private Button firstFav; private Button thirdFav; private Button secondFav;
+    private String firstFavLabel = ""; private String thirdFavLabel = ""; private String secondFavLabel = "";
+    private int firstFavNum = 7; private int thirdFavNum = 2; private int secondFavNum = 5;
 
     // new buttons
     private Button switchToDVRButton; private Button configureButton;
@@ -120,9 +124,9 @@ public class MainActivity extends Activity {
             switch (v.getId()) {
                 case R.id.plusButton: plusPressed(); break;
                 case R.id.minusButton: minusPressed(); break;
-                case R.id.firstFav:  break;
-                case R.id.thirdFav:  break;
-                case R.id.secondFav: break;
+                case R.id.firstFav:  firstFavPressed();  break;
+                case R.id.thirdFav:  thirdFavPressed();  break;
+                case R.id.secondFav: secondFavPressed();  break;
                 case R.id.switchToDVRButton: switchToDVRPressed(); break;
                 case R.id.configureButton: configurePressed(); break;
                 default: numPressed(v); break;  // default case is when user pressed a numeric button
@@ -130,12 +134,69 @@ public class MainActivity extends Activity {
         }
     }
 
-    void configurePressed() {
+    void firstFavPressed() {
+        String firstFavNumStr = String.valueOf(firstFavNum);
+
+            currentChannelNum = firstFavNum;
+            if (firstFavNumStr.length() == 1) {
+                currentChanText.setText("00" + Integer.toString(firstFavNum));
+            }
+
+            if (firstFavNumStr.length() == 2) {
+                currentChanText.setText("0" + Integer.toString(firstFavNum));
+            }
+
+            if (firstFavNumStr.length() == 3) {
+                currentChanText.setText(Integer.toString(firstFavNum));
+            }
 
     }
 
-    void switchToDVRPressed() {
+    void secondFavPressed() {
+        String secondFavNumStr = String.valueOf(secondFavNum);
 
+            currentChannelNum = secondFavNum;
+            if (secondFavNumStr.length() == 1) {
+                currentChanText.setText("00" + Integer.toString(secondFavNum));
+            }
+
+            if (secondFavNumStr.length() == 2) {
+                currentChanText.setText("0" + Integer.toString(secondFavNum));
+            }
+
+            if (secondFavNumStr.length() == 3) {
+                currentChanText.setText(Integer.toString(secondFavNum));
+            }
+
+    }
+
+    void thirdFavPressed() {
+        String thirdFavNumStr = String.valueOf(thirdFavNum);
+
+            currentChannelNum = thirdFavNum;
+            if (thirdFavNumStr.length() == 1) {
+                currentChanText.setText("00" + Integer.toString(thirdFavNum));
+            }
+
+            if (thirdFavNumStr.length() == 2) {
+                currentChanText.setText("0" + Integer.toString(thirdFavNum));
+            }
+
+            if (thirdFavNumStr.length() == 3) {
+                currentChanText.setText(Integer.toString(thirdFavNum));
+            }
+
+    }
+
+    void configurePressed() {
+        Intent intent = new Intent(MainActivity.this, FavchanActivity.class);
+        //startActivity(intent);
+        startActivityForResult(intent, ASK_QUESTION);
+    }
+
+    void switchToDVRPressed() {
+        Intent intent = new Intent(MainActivity.this, DVRActivity.class);
+        startActivity(intent);
     }
 
     void minusPressed() {
@@ -185,6 +246,35 @@ public class MainActivity extends Activity {
                 channelUserIsEntering = "";
             } else {
                 channelUserIsEntering = "";
+            }
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("onActivityResult called");
+        if (requestCode == ASK_QUESTION) {
+            if (resultCode == RESULT_OK) {
+                String position = data.getCharSequenceExtra("Position").toString();
+                String labelToSet = data.getCharSequenceExtra("Label").toString();
+                String chanNumToSet = data.getCharSequenceExtra("Channel").toString();
+
+                if (position.equals("Left")) {
+                    System.out.println("Changing left button");
+                    firstFav.setText(labelToSet);
+                    firstFavNum = Integer.parseInt(chanNumToSet);
+                }
+
+                if (position.equals("Middle")) {
+                    System.out.println("Changing middle button");
+                    secondFav.setText(labelToSet);
+                    secondFavNum = Integer.parseInt(chanNumToSet);
+                }
+
+                if (position.equals("Right")) {
+                    System.out.println("Changing right button");
+                    thirdFav.setText(labelToSet);
+                    thirdFavNum = Integer.parseInt(chanNumToSet);
+                }
             }
         }
     }

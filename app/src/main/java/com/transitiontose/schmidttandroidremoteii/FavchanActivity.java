@@ -9,6 +9,7 @@ import android.view.*;
 import android.view.View.*;
 import android.os.Bundle;
 import android.widget.*;
+import android.content.Intent;
 
 public class FavchanActivity extends Activity {
 
@@ -32,9 +33,9 @@ public class FavchanActivity extends Activity {
     private Button cancelButton;
     private Button saveButton;
     private ButtonClickListener btnClick;
-    private Boolean leftRadioButtonSelected = false;
-    private Boolean middleRadioButtonSelected = false;
-    private Boolean rightRadioButtonSelected = false;
+    public Boolean leftRadioButtonSelected = false;
+    public Boolean middleRadioButtonSelected = false;
+    public Boolean rightRadioButtonSelected = false;
     private int currentChanNum = 0;
     private String channelUserIsEntering = "";
 
@@ -137,11 +138,58 @@ public class FavchanActivity extends Activity {
     }
 
     private void cancelPressed() {
-
+        finish();
     }
 
     private void savePressed() {
+        Intent data = new Intent();
+        if (leftRadioButtonSelected == true && middleRadioButtonSelected == false && rightRadioButtonSelected == false) {
+            if (labelField.getText().length() >= 2 && labelField.getText().length() <= 4) {
+                if (Integer.parseInt(userChannelText.getText().toString()) >= 1 && Integer.parseInt(userChannelText.getText().toString()) <= 999) {
+                    data.putExtra("Label", labelField.getText());
+                    data.putExtra("Position", "Left");
+                    data.putExtra("Channel", userChannelText.getText());
+                    setResult(RESULT_OK, data);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Channel number cannot be 0.", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, "Label must be 2-4 characters long.", Toast.LENGTH_LONG).show();
+            }
+        } else if (middleRadioButtonSelected == true && leftRadioButtonSelected == false && rightRadioButtonSelected == false) {
+            if (labelField.getText().length() >= 2 && labelField.getText().length() <= 4) {
+                if (Integer.parseInt(userChannelText.getText().toString()) >= 1 && Integer.parseInt(userChannelText.getText().toString())<= 999) {
+                    data.putExtra("Label", labelField.getText());
+                    data.putExtra("Position", "Middle");
+                    data.putExtra("Channel", userChannelText.getText());
+                    setResult(RESULT_OK, data);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Channel number cannot be 0.", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, "Label must be 2-4 characters long.", Toast.LENGTH_LONG).show();
+            }
+        } else if (rightRadioButtonSelected == true && leftRadioButtonSelected == false && middleRadioButtonSelected == false) {
+            if (labelField.getText().length() >= 2 && labelField.getText().length() <= 4) {
+                if (Integer.parseInt(userChannelText.getText().toString()) >= 1 && Integer.parseInt(userChannelText.getText().toString()) <= 999) {
+                    data.putExtra("Label", labelField.getText());
+                    data.putExtra("Position", "Right");
+                    data.putExtra("Channel", userChannelText.getText());
+                    setResult(RESULT_OK, data);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Channel number cannot be 0.", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, "Label must be 2-4 characters long.", Toast.LENGTH_LONG).show();
+            }
+        }
 
+        if (rightRadioButtonSelected == false && leftRadioButtonSelected == false && middleRadioButtonSelected == false) {
+            Toast.makeText(this, "You must selected one of the radio buttons.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void numberPressed(View v) {
@@ -162,62 +210,24 @@ public class FavchanActivity extends Activity {
     public void onRadioButtonClicked(View view) {
         RadioButton radioButton = (RadioButton) view;
         if (radioButton.getText().equals("Left")) {
+            System.out.println("Left radio pressed");
             leftRadioButtonSelected = true;
             middleRadioButtonSelected = false;
             rightRadioButtonSelected = false;
-        } else if (radioButton.getText().equals("Middle")) {
+        }
+
+        if (radioButton.getText().equals("Middle")) {
+            System.out.println("Middle radio pressed");
             middleRadioButtonSelected = true;
             leftRadioButtonSelected = false;
             rightRadioButtonSelected = false;
-        } else if (radioButton.getText().equals("Right")) {
+        }
+
+        if (radioButton.getText().equals("Right")) {
+            System.out.println("Right radio pressed");
             rightRadioButtonSelected = true;
             middleRadioButtonSelected = false;
             leftRadioButtonSelected = false;
         }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_favchan, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

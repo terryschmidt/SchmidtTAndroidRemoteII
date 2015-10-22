@@ -102,7 +102,7 @@
                 android:layout_weight="1"
                 android:paddingRight="10dp"
                 android:gravity="left"
-                android:inputType="number"
+                android:inputType=""
                 android:layout_height="wrap_content"
                 android:hint=""
                 android:layout_gravity="bottom" />
