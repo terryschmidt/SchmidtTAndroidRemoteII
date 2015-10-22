@@ -121,6 +121,7 @@
         android:text="My Remote Control"
         android:id="@+id/myRemoteControl"
         android:gravity="center_vertical"
+        android:paddingTop="10dp"
         android:textStyle="bold"
         android:textSize="28sp"
         android:layout_gravity="center_horizontal"
@@ -416,22 +417,28 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="3dp"
         >
 
         <Button
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
             android:text="Switch to DVR"
-            android:id="@+id/switchToDVRButton" />
+            android:id="@+id/switchToDVRButton"
+            android:layout_gravity="center_vertical|bottom" />
 
         <Button
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
             android:text="configure"
-            android:id="@+id/configureButton" />
+            android:id="@+id/configureButton"
+            android:layout_gravity="bottom" />
 
     </LinearLayout>
 </LinearLayout>
