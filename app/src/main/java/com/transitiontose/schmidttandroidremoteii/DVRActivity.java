@@ -97,7 +97,7 @@ public class DVRActivity extends Activity {
     }
 
     private void playPressed() { // check if DVR can be set to play.  If so, set state in UI, else impossibleRequest()
-        if (stateText.getText() == "Recording") {
+        if (stateText.getText().equals("Recording")) {
             impossibleRequest("Playing");
         } else {
             stateText.setText("Playing");
@@ -111,7 +111,7 @@ public class DVRActivity extends Activity {
     }
 
     private void pausePressed() { // check if DVR can be set to pause.  If so, set the state in UI.  Else call impossibleRequest().
-        if (isInPlayMode == true && stateText.getText() != "Recording") {
+        if (isInPlayMode == true && !stateText.getText().equals("Recording")) {
             stateText.setText("Paused");
         } else {
             impossibleRequest("Paused");
@@ -119,7 +119,7 @@ public class DVRActivity extends Activity {
     }
 
     private void fastForwardPressed() { // check if DVR can be set to FF.  If so, set the state in UI, else call impossibleRequest().
-        if (isInPlayMode == true && stateText.getText() != "Recording") {
+        if (isInPlayMode == true && !stateText.getText().equals("Recording")) {
             stateText.setText("Fast forwarding");
         } else {
             impossibleRequest("Fast forwarding");
@@ -127,7 +127,7 @@ public class DVRActivity extends Activity {
     }
 
     private void rewindPressed() { // check if DVR can be set to rewind.  If so, set the state, else call impossibleRequest().
-        if (isInPlayMode == true && stateText.getText() != "Recording") {
+        if (isInPlayMode == true && !stateText.getText().equals("Recording")) {
             stateText.setText("Fast rewinding");
         } else {
             impossibleRequest("Fast rewinding");
@@ -135,7 +135,7 @@ public class DVRActivity extends Activity {
     }
 
     private void recordPressed() { // check if DVr can be set to record.  If so, set the state, else call impossibleRequest().
-        if (stateText.getText() == "Stopped" && isInPlayMode == false) {
+        if (stateText.getText().equals("Stopped") && isInPlayMode == false) {
             stateText.setText("Recording");
         } else {
             impossibleRequest("Recording");
