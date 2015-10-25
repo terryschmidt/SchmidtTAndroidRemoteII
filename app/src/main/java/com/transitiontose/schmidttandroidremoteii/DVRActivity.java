@@ -10,7 +10,9 @@ import android.view.View.*;
 import android.os.Bundle;
 import android.widget.*;
 
+// hi
 // Terry Schmidt, CSC472, Fall 2015
+// yo
 
 public class DVRActivity extends Activity {
 
