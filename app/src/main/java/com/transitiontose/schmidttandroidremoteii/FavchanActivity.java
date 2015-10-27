@@ -191,7 +191,7 @@ public class FavchanActivity extends Activity {
         }
 
         if (rightRadioButtonSelected == false && leftRadioButtonSelected == false && middleRadioButtonSelected == false) {
-            Toast.makeText(this, "You must selected one of the radio buttons.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "You must select one of the radio buttons.", Toast.LENGTH_LONG).show();
         }
     }
 
